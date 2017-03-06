@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:car.properties"/>
+
+    <bean id="tyres" class="Tyres" abstract="true">
+        <property name="name" value="name"/>
+        <property name="size" value="13"/>
+    </bean>
+
+    <bean id="engine" class="Engine">
+        <property name="engineСapacity" value="capacity"/>
+    </bean>
+
+    <bean id="wheel" class="Wheel" scope="prototype">
+        <property name="tyres" ref="winterTyres"/>
+    </bean>
+
+    <bean id="car" class="Car">
+        <property name="engine" ref="engine"/>
+        <property name="wheels">
+            <list>
+                <ref bean="wheel"/>
+                <ref bean="wheel"/>
+                <ref bean="wheel"/>
+                <ref bean="wheel"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="winterTyres" class="WinterTyres" parent="tyres">
+        <property name="name" value="winterTyres"/>
+        <property name="size" value="10"/>
+    </bean>
+
+    <bean id="summerTyres" class="SummerTyres" parent="tyres">
+        <property name="name" value="SummerTyres"/>
+        <property name="size" value="5"/>
+    </bean>
+</beans>
